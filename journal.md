@@ -1,5 +1,8 @@
 # WeatherApp -DevJournal
 
+## 2026-10-20
+- Did: implemented `input` function so user can type the city's name
+
 ## 2026-10-19
 Project insipration came from geeksforgeeks.org's list 'Python Projects - Beginner to Advanced'
 Landed on weather app because i feel like it would help me in my data-analyst career.

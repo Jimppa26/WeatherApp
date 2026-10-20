@@ -14,5 +14,6 @@ When this app is ran it gives a popup notification telling the user the desired 
     ```bash
     uv run weatherapp.py
     ```
+3. Type in the city of which you want the status of.
 ## Credits
 - [geeksforgeeks.com](https://www.geeksforgeeks.org/python/get-live-weather-desktop-notifications-using-python/)

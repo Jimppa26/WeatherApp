@@ -8,7 +8,7 @@
 import requests
 from plyer import notification
 
-city = "Oulu"
+city = input("Kaupunki: ")
 geo_url = "https://geocoding-api.open-meteo.com/v1/search"
 geo_params = {"name": city, "count": 1} # Sanakirja missä on hakuehdot (kaupungin nimi, tulosten lukumäärä)
 geo_res = requests.get(geo_url, params=geo_params).json() # Lähettää 'GET' pyynnön geocoding API:lle hakuehdoilla ja kääntää API:n vastauksen JSON formattiin
