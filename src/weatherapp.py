@@ -23,25 +23,54 @@ if "results" in geo_res:
     weather_params = {
         "latitude": lat,
         "longitude": lon,
-        "current_weather": True
+        	"current": ["snowfall", "rain", "temperature_2m", "cloud_cover", "wind_speed_10m"]
     }
     weather_res = requests.get(weather_url, params=weather_params).json() # Hakee säätiedot vain kyseisestä kaupungista
 
-    if "current_weather" in weather_res:
-        # Hakee lämpötilan, tuulennopeuden sekä pistää ne hienoon järjestykseen
-        temp = weather_res["current_weather"]["temperature"]
-        wind = weather_res["current_weather"]["windspeed"]
-        weather_info = f"{city}: {temp}°C, Tuuli {wind} km/h"
+    if "current" in weather_res:
+        while True:
+            action = input("Mitä haluat tietää? (Kirjoita 'exit' lopettaaksesi): ")
+            weather_info = None
 
-        print("Weather:", weather_info)
+            if action == "-help":
+                print(f"lämpötila, tuuli, sade, pilvisyys")
+            elif action == "lämpötila":
+                temp = weather_res["current"]["temperature_2m"]
+                weather_info = f"{city}: {temp}°C"
+            elif action == "tuuli":
+                wind = weather_res["current"]["wind_speed_10m"]
+                weather_info = f"{city}: Tuuli {wind} km/h"
+            elif action == "pilvisyys":
+                cloud = weather_res["current"]["cloud_cover"]
+                weather_info = f"{city}: Pilvisyys {cloud}%"
+            elif action == "sade":
+                rain = weather_res["current"]["rain"]
+                snow = weather_res["current"]["snowfall"]
+                if snow > 0 and rain > 0:
+                    weather_info = f"{city}: Sataa räntää (Vettä {rain} mm, Lunta {snow} cm)"
+                elif snow > 0:
+                    weather_info = f"{city}: Lumisade ({snow} cm)"
+                elif rain > 0:
+                    weather_info = f"{city}: Vesisade ({rain} mm)"
+                else:
+                    weather_info = f"{city}: Ei sada."
+            elif action == "exit":
+                print("Lopetetaan...")
+                break
 
-        # Tekee popup-ilmoituksen näytölle
-        notification.notify(
-            title = "Säätiedotus",
-            message = weather_info,
-            # Popup näkyy 5s ajan
-            timeout = 5
-        )
+            else:
+                print("Virheellinen valinta. Käytä -help")
+
+            if weather_info:
+                print("Weather:", weather_info)
+
+                # Tekee popup-ilmoituksen näytölle
+                notification.notify(
+                    title = "Säätiedotus",
+                    message = weather_info,
+                    # Popup näkyy 5s ajan
+                    timeout = 5
+                )
     else:
         print("Säätiedotusta ei saatavilla.")
 else:

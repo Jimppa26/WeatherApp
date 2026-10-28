@@ -1,4 +1,6 @@
 # WeatherApp -DevJournal
+## 2026-20-28
+- Did: implemented a new feature where the script asks you what weather info you would like to know. Also put it in a loop that breaks with `exit` and a `-help` input that shows the weather informations you can see.
 
 ## 2026-10-20
 - Did: implemented `input` function so user can type the city's name
